@@ -83,16 +83,189 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  margin: 20px;
+  width: 100%;
+  height: 100%;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #cbced1;
+    /* rgb(var(--background-start-rgb)); */
+}
+
+.container {
+  padding: 20px;
+  width: 100%;
+  background-color: white;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+  color: #066;
+  }
+
+/* Start for CSS for table */
+.table-apps {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 90%;
+  padding: 20px;
+  margin: 10px
+}
+
+.table-apps td, .table-apps th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-apps tr:nth-child(even){background-color: #f2f2f2;}
+
+.table-apps tr:hover {background-color: #ddd;cursor: "pointer";}
+
+.table-apps th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0275d8;
+  color: white;
+
+}
+
+/* End of CSS for table */
+
+
+/* Start for css button */
+
+.button {
+  appearance: none;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.button:hover {
+  background-color: #F3F4F6;
+  color: black;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.button:disabled {
+  background-color: #FAFBFC;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959DA5;
+  cursor: default;
+}
+
+.button:active {
+  background-color: #EDEFF2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+.button:focus {
+  outline: 1px transparent;
+}
+
+.button:before {
+  display: none;
+}
+
+.button:-webkit-details-marker {
+  display: none;
+}
+
+.button-primary {
+  background-color: #0275d8;
+}
+
+.button-success {
+  background-color: #5cb85c;
+}
+
+.button-info {
+  background-color: #5bc0de;
+}
+
+.button-warning {
+  background-color: #f0ad4e;
+}
+
+.button-danger {
+  background-color: #d9534f;
+}
+
+
+
+/* End of CSS Button */
+
+
+/* Form css */
+.row {
+  justify-items: flex-start;
+  margin: 10px;
+  padding: 2px;
+}
+
+
+.text-center {
+  text-align: 'center';
+  margin: 0;
+}
+
+.small-text {
+  font-size: small;
+  color: red;
+  margin-top: 2px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  }
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+background: rgba(255,255,255,0.1);
+border: none;
+font-size: 16px;
+height: auto;
+margin: 0;
+outline: 0;
+padding: 15px;
+width: 50%;
+background-color: #e8eeef;
+color: #8a97a0;
+box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+margin-bottom: 30px;
 }
 
 a {
@@ -103,5 +276,11 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  input {
+    width: 100%;
   }
 }
