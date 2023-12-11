@@ -17,7 +17,7 @@ export default async function(req, res) {
         var length = items.length
         var id = length+1;
 
-        const result = await db.run(`INSERT INTO produk(id, nama, deskripsi, harga, stok, foto, suplier_id) VALUES(${id}, '${data.name}', '${data.deskripsi}', '${data.harga}', '${data.stok}', '${data.foto}', '${supplier_id}')`)
+        const result = await db.run(`INSERT INTO produk(id, nama, deskripsi, harga, stok, foto, suplier_id) VALUES(${id}, '${data.name}', '${data.deskripsi}', '${data.harga}', '${data.stok}', '${data.foto}', '${data.supplier_id}')`)
 
         var ret = {
             item: data

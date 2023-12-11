@@ -11,15 +11,18 @@ export default async function (req, res) {
             filename: dbFile,
             driver: sqlite3.Database
         })
-        
-        var item = {}
 
-        var query = ''
+        var data = req.body
+        var id = data.id
+        
+        
+
+        var query = `DELETE FROM produk where id=${id}`
         const result = await db.run(query)
 
 
         var ret = {
-            item: item
+            status: {message: 'delete complete'}
         }
 
         res.json(ret)

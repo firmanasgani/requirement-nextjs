@@ -6,6 +6,7 @@ export default async function(req, res) {
 
     try {
         var data = req.body
+        var id = data.id
 
         var dbFile = './test.db'
         const db = await open({
@@ -14,10 +15,16 @@ export default async function(req, res) {
         })
 
         var item = {
-
+            nama: data.name,
+            deskripsi: data.deskripsi,
+            harga: data.harga,
+            stok: data.stok,
+            foto: data.foto,
+            suplier_id: data.suplier_id,
+            id: id
         }
-        const query = ''
-        const result = await db.run(sql)
+        const query = 'UPDATE produk SET nama=?, deskripsi=?, harga=?, stok=?, foto=?, suplier_id=? where id=?'
+        const result = await db.run(sql, data.name, data.deskripsi, data.harga, data.stok, data.foto, data.suplier_id, id)
 
         var ret = {
             item : item

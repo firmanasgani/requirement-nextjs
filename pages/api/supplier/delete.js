@@ -15,7 +15,7 @@ export default async function (req, res) {
         const result = await db.run(`delete from suplier where id_suplier=${id}`)
 
         var ret = {
-            status: {msessage: 'delete complete'}
+            status: {message: 'delete complete'}
         }
 
         res.json(ret)
