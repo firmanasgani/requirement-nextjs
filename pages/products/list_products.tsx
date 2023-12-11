@@ -57,7 +57,7 @@ const  ListProducts = () => {
                     <td>{data.deskripsi}</td>
                     <td>{data.harga}</td>
                     <td>{data.stok}</td>
-                    <td>{data.foto}</td>
+                    <td><img src={'/uploads/products/'+data.foto} width={150} height={150}  /></td>
                     <td>
                       <Link href={{ pathname:'/products/form_product', query: {id: data.id}}} className='button button-info' >
                       Edit</Link>

@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import axios from 'axios'
+//import { writeFile } from "fs/promises"
 
 const FormProducts = () => {
     const searchParams = useSearchParams() 
@@ -43,12 +44,12 @@ const FormProducts = () => {
         if(!file) return
 
         try{
-            var fileInMB = (file.size)/1024
+            var fileInMB = (file.size)/1024 //convert to MB
             if(fileInMB > 2048) {
                 return alert('File tidak boleh lebih dari 2 mb (file berukuran ' +(fileInMB).toFixed(2)+')')
             }else {
               
-                formData.suplier_id = value
+                formData.suplier_id = value ?? 1
                 var name = file.name== null ? '' : file.name.split('.').pop(); 
                 formData.ext_file = name ?? ""
                 
@@ -60,7 +61,8 @@ const FormProducts = () => {
                 const bytes = await file.arrayBuffer()
                 const buffer = Buffer.from(bytes)
                 const path = `/upload/products/${last}`
-                console.log(name)
+                //writeFile(path, buffer)
+             
                 const res = await axios.post('/api/products/new', formData)
                 console.log("POST Created", res)
                 location.replace('/')
