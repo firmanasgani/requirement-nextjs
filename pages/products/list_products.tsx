@@ -37,7 +37,7 @@ const  ListProducts = () => {
           <tbody>
           {
             
-            productList && productList.length && productList.map((data: any, index: any) => {
+            productList && productList.length > 0 ?  productList.map((data: any, index: any) => {
               
               return (
                 <>
@@ -56,12 +56,12 @@ const  ListProducts = () => {
                   </tr>
                 </>
               )
-            })
+            }) : <tr><td colSpan={6}>Tidak ada data</td></tr>
           } 
 
           </tbody>
         </table>
-        <Link href='/supplier/form_product' className='button button-success'>
+        <Link href='/products/form_product' className='button button-success'>
         Tambah Products
        </Link>
     </div>

@@ -11,13 +11,10 @@ export default async function(req, res) {
         }) 
         
         //check id
+        const items = await db.all("SELECT * from suplier ORDER BY nama_suplier ASC")
+        var id = items.length + 1
 
-
-        const result = await db.run('INSERT INTO suplier(id_suplier,nama_suplier,alamat,email) VALUES(2, ?, ?, ?)', {
-            nama_supplier: req.body.name,
-            alamat: req.body.alamat,
-            email: req.body.email
-        })
+        const result = await db.run(`INSERT INTO suplier(id_suplier,nama_suplier,alamat,email) VALUES(${id},'${data.name}','${data.alamat}','${data.email}')`)
 
         var ret = {
             item: {message: 'success'}
@@ -27,7 +24,6 @@ export default async function(req, res) {
 
     }catch(err) {
         console.log(err)
-        console.log(req.body)
         res.status(500).send()
     }
 

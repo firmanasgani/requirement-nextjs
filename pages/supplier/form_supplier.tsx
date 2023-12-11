@@ -1,91 +1,91 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react"
+import axios from "axios"
+import Link from "next/link"
+import { redirect, useSearchParams } from "next/navigation"
+import { Router } from "next/router"
 
-export default function FormSupplier() {
+const FormSupplier = () =>  {
+    const searchParams = useSearchParams()
+    const search = searchParams.get('id')
+    var id = search == undefined ? 0 : search
 
+ 
     const [formData, setFormData] = useState({
+        id: "",
         name: "",
-        alamat: '',
-        email: ''
+        alamat: "",
+        email: "",
     })
 
-    const [formSuccess, setFormSuccess] = useState(false) 
-    const [formSuccessMessage, setFormSuccessMessage] = useState("")
-
-    const handleInput = (e) => {
-        const fieldName = e.target.name
-        const fieldValue = e.target.value
-        console.log(fieldValue)
-
-        setFormData((prevState) => ({
-            ...prevState,
-            [fieldName]: fieldValue
-        }))
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const submitForm = (e) => {
-        e.preventDefault()
-        const formURL = e.target.action
-        const data = new FormData()
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value)
-        })
+    const handleSubmit = async (e) => {
+        e.preventDefault() 
+        try {
 
-        var array = {
-            name: 'firman',
-            alamat: 'Firman',
-            email: 'email'
+            
+            const url = id == 0 ? '/new' : '/update'
+            const res = await axios.post("/api/supplier"+url, formData)
+            console.log("POST Created", res.data)
+            location.replace('/supplier/list_supplier')
+        }catch(err) {
+            console.log("error creating post", err) 
         }
-
-        fetch('/api/supplier/new', {
-            method: "POST",
-            body: JSON.stringify(array),
-            headers: {
-                'accept' : 'application/json'
-            }
-        }).then((response) => response.json())
-        .then((data) => {
-            setFormData({
-                name: "",
-                alamat: "",
-                email: ""
-            })
-
-            setFormSuccess(true)
-            setFormSuccessMessage(data.submission_text)
-        })
     }
+
+
+    useEffect(() => {
+        const getDetail = async () => {
+            const query = await fetch('/api/supplier/show?id='+search)
+            const res = await query.json()
+            setFormData(res.item)
+            
+        }
+        id != 0 ? getDetail() : []
+    }, [])
 
     return (
-        <>
-            <div className="container">
-                <div>
-                    <h1>Form Supplier</h1>
-                    {formSuccess ? <div>{formSuccessMessage}</div> : 
-                        <form method="POST" action="/api/supplier/new" onSubmit={submitForm}>
-                          
-                            <div>
-                                <label>Name</label> 
-                                <input type="text" name="name" onChange={handleInput} value={formData.name} />
-                            </div>
-          
-                            <div>
-                                <label>Alamat</label>
-                                <input type="text" name="alamat" onChange={handleInput} value={formData.alamat} />
-                            </div>
-          
-                            <div>
-                                <label>Email</label>
-                         
-                                <input type="text" name="email" onChange={handleInput} value={formData.email} />
-                            
-            
-                            </div>
-          
-                            <button type="submit" className="button button-primary">Send message</button>
-                        </form>
-                    }
-                </div>
-            </div>
-        </>
+        <form onSubmit={handleSubmit}>
+             <input
+                type="hidden"
+                name="search"
+                value={formData.id}
+                onChange={handleChange}>
+            </input>
+            <label>Nama: </label>
+            <input 
+                type="text" 
+                name="name" 
+                value={formData.name} 
+                onChange={handleChange}>
+            </input>
+
+            <label>Alamat</label>
+            <input 
+                type="text"
+                name="alamat"
+                value={formData.alamat}
+                onChange={handleChange}>
+            </input>
+
+            <label>Email</label>
+            <input 
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}>
+            </input>
+            <br />
+            <button className="button button-primary" type="submit">{
+                id == 0 ? 'Tambah' : 'Ubah'
+            } Supplier</button>
+            <br/>
+            <Link className="button button-danger" href="/supplier/list_supplier">Kembali ke List Supplier</Link>
+
+        </form>
     )
+    
 }
+export default FormSupplier;
