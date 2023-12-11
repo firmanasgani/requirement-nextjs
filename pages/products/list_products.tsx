@@ -1,5 +1,4 @@
-
-import { useRouter } from 'next/router'
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -7,10 +6,21 @@ const  ListProducts = () => {
 
   const [productList, setProductList] = useState([])
 
+  const deleteProduct = async (id) => {
+    try {
+      const res = await axios.post('/api/products/delete', {id: id})
+      console.log('POST: ' +res) 
+      location.reload()
+    }catch(err) {
+      console.error('Error : ' +err)
+    }
+  }
+
   useEffect(() => {
     const getData = async () => {
-      const query = await fetch('http://localhost:3000/api/products/list')
+      const query = await fetch('/api/products/list')
       const res = await query.json()
+      console.log(res.data.length)
       setProductList(res.data)
     }
     getData()
@@ -26,37 +36,38 @@ const  ListProducts = () => {
        <table className="table-apps">
        <thead>
             <tr>
+              <th>#</th>
               <th>Nama</th>
               <th>Deskripsi</th>
               <th>harga</th>
               <th>stok</th>
               <th>foto</th>
-              <th colSpan={2}>Aksi</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
           {
-            
-            productList && productList.length > 0 ?  productList.map((data: any, index: any) => {
-              
+          
+            productList.length > 0 ? productList.map((data: any, index: any) => {
               return (
                 <>
                   <tr key={data.id}>
+                    <td>{index+1}</td>
                     <td>{data.nama}</td>
                     <td>{data.deskripsi}</td>
                     <td>{data.harga}</td>
                     <td>{data.stok}</td>
                     <td>{data.foto}</td>
                     <td>
-                      <Link href={{ pathname:'/products/form_product/[id]', query: {id: data.id}}} className='button button-info' >
+                      <Link href={{ pathname:'/products/form_product', query: {id: data.id}}} className='button button-info' >
                       Edit</Link>
-                      <Link href={{ pathname:'/products/delete_products/[id]', query: {id: data.id}}} className='button button-danger'>
-                      Hapus</Link>
+                      <button onClick={() => deleteProduct(data.id)} className='button button-danger'>
+                      Hapus</button>
                     </td>
                   </tr>
                 </>
               )
-            }) : <tr><td colSpan={6}>Tidak ada data</td></tr>
+            }) :  (<><tr><td colSpan={7}>Tidak ada data</td></tr></>)
           } 
 
           </tbody>

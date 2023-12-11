@@ -1,5 +1,3 @@
-
-import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -23,7 +21,6 @@ const  ListSupplier = () => {
     const getData = async () => {
       const query = await fetch('/api/supplier/list')
       const res = await query.json()
-      
       setSupplierList(res.data)
     }
     getData()
@@ -46,7 +43,7 @@ const  ListSupplier = () => {
               <th>Nama</th>
               <th>Alamat</th>
               <th>email</th>
-              <th colSpan={2}>Aksi</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>

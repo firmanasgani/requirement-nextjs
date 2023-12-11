@@ -14,12 +14,9 @@ export default async function (req, res) {
 
         var data = req.body
         var id = data.id
-        
-        
 
         var query = `DELETE FROM produk where id=${id}`
         const result = await db.run(query)
-
 
         var ret = {
             status: {message: 'delete complete'}

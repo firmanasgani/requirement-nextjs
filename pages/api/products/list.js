@@ -11,10 +11,7 @@ export default async function(req, res) {
         })
         const items = await db.all("SELECT a.id, a.nama, a.deskripsi, a.harga, a.stok, a.foto, b.nama_suplier from produk a JOIN suplier b ON a.suplier_id = b.id_suplier order by nama ASC")
         
-        var ret = {
-            
-            data:  items,
-        }
+        var ret = {data:  items == undefined ? [] : items }
 
         res.json(ret)
     }catch(err) {
